@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app/routes.dart';
+import 'app/theme.dart';
+import 'providers/auth_provider.dart';
+import 'providers/inventory_provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MediStockApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MediStockApp extends StatelessWidget {
+  const MediStockApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => InventoryProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        initialRoute: AppRoutes.splash,
+        routes: AppRoutes.routes,
       ),
     );
   }
