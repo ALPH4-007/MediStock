@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class InventoryScreen extends StatelessWidget {
-  const InventoryScreen({super.key});
+class EditMedicineScreen extends StatelessWidget {
+  const EditMedicineScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inventory'),
+        title: const Text('Edit Medicine'),
       ),
       body: Center(
         child: Text(
-          'Inventory Screen',
+          'Edit Medicine Screen',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),

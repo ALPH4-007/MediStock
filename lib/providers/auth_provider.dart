@@ -1,32 +1,45 @@
-
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../services/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
-  static const String _loggedInKey = 'isLoggedIn';
+  final AuthService _authService = AuthService();
 
   bool _isLoggedIn = false;
+  bool _isLoading = false;
 
   bool get isLoggedIn => _isLoggedIn;
+  bool get isLoading => _isLoading;
 
   // Call this once at app startup, before relying on isLoggedIn.
   Future<void> loadLoginState() async {
-    final prefs = await SharedPreferences.getInstance();
-    _isLoggedIn = prefs.getBool(_loggedInKey) ?? false;
+    _isLoading = true;
+    notifyListeners();
+
+    _isLoggedIn = await _authService.getLoginState();
+
+    _isLoading = false;
     notifyListeners();
   }
 
   Future<void> login() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_loggedInKey, true);
+    _isLoading = true;
+    notifyListeners();
+
+    await _authService.saveLoginState(true);
     _isLoggedIn = true;
+
+    _isLoading = false;
     notifyListeners();
   }
 
   Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_loggedInKey, false);
+    _isLoading = true;
+    notifyListeners();
+
+    await _authService.clearSession();
     _isLoggedIn = false;
+
+    _isLoading = false;
     notifyListeners();
   }
 }

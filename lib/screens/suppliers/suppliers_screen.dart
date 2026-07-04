@@ -6,8 +6,15 @@ class SuppliersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Suppliers')),
-      body: const Center(child: Text('Suppliers Screen')),
+      appBar: AppBar(
+        title: const Text('Suppliers'),
+      ),
+      body: Center(
+        child: Text(
+          'Suppliers Screen',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ),
     );
   }
 }

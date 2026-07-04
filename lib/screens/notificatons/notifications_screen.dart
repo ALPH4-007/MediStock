@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class InventoryScreen extends StatelessWidget {
-  const InventoryScreen({super.key});
+class NotificationsScreen extends StatelessWidget {
+  const NotificationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inventory'),
+        title: const Text('Notifications'),
       ),
       body: Center(
         child: Text(
-          'Inventory Screen',
+          'Notifications Screen',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),

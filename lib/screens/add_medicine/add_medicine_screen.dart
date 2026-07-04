@@ -6,8 +6,15 @@ class AddMedicineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Medicine')),
-      body: const Center(child: Text('Add Medicine Screen')),
+      appBar: AppBar(
+        title: const Text('Add Medicine'),
+      ),
+      body: Center(
+        child: Text(
+          'Add Medicine Screen',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ),
     );
   }
 }
