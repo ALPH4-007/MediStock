@@ -56,27 +56,37 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
 
     setState(() => _isSaving = true);
 
-    final medicine = Medicine(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      name: _nameController.text.trim(),
-      barcode: _barcodeController.text.trim().isEmpty
-          ? null
-          : _barcodeController.text.trim(),
-      category: _category,
-      quantity: int.parse(_quantityController.text.trim()),
-      minimumStock: int.parse(_minimumStockController.text.trim()),
-      expiryDate: _expiryDate,
-      unitPrice: double.parse(_unitPriceController.text.trim()),
-      description: _descriptionController.text.trim().isEmpty
-          ? null
-          : _descriptionController.text.trim(),
-      createdAt: DateTime.now(),
-    );
+    try {
+      final medicine = Medicine(
+        name: _nameController.text.trim(),
+        barcode: _barcodeController.text.trim().isEmpty
+            ? null
+            : _barcodeController.text.trim(),
+        category: _category,
+        quantity: int.parse(_quantityController.text.trim()),
+        minimumStock: int.parse(_minimumStockController.text.trim()),
+        expiryDate: _expiryDate,
+        sellingPrice: double.parse(_unitPriceController.text.trim()),
+        description: _descriptionController.text.trim().isEmpty
+            ? null
+            : _descriptionController.text.trim(),
+        createdAt: DateTime.now(),
+      );
 
-    await context.read<InventoryProvider>().addMedicine(medicine);
+      await context.read<InventoryProvider>().addMedicine(medicine);
 
-    if (!mounted) return;
-    Navigator.pop(context);
+      if (!mounted) return;
+      Navigator.pop(context);
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not save medicine: $error')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
+    }
   }
 
   String? _requiredValidator(String? value) {

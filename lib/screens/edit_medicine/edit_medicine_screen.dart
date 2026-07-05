@@ -86,7 +86,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
       quantity: int.parse(_quantityController.text.trim()),
       minimumStock: int.parse(_minimumStockController.text.trim()),
       expiryDate: _expiryDate,
-      unitPrice: double.parse(_unitPriceController.text.trim()),
+      sellingPrice: double.parse(_unitPriceController.text.trim()),
       description: _descriptionController.text.trim().isEmpty
           ? null
           : _descriptionController.text.trim(),

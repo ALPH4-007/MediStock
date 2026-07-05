@@ -6,7 +6,8 @@ import 'app/theme.dart';
 import 'providers/auth_provider.dart';
 import 'providers/inventory_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MediStockApp());
 }
 

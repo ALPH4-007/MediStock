@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../screens/add_medicine/add_medicine_screen.dart';
 import '../screens/add_suppliers/add_suppliers_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
-import '../screens/edit_medicine/edit_medicine_screen.dart';
 import '../screens/inventory/inventory_screen.dart';
 import '../screens/login/login_screen.dart';
 import '../screens/medicine_details/medicine_details_screen.dart';
@@ -71,7 +70,7 @@ class AppRoutes {
     inventory: (_) => const AuthGuard(child: InventoryScreen()),
     medicineDetails: (_) => const AuthGuard(child: MedicineDetailsScreen()),
     addMedicine: (_) => const AuthGuard(child: AddMedicineScreen()),
-   // editMedicine: (_) => const AuthGuard(child: EditMedicineScreen()),
+    // editMedicine: (_) => const AuthGuard(child: EditMedicineScreen()),
     barcodeScanner: (_) => const AuthGuard(child: ScanScreen()),
     suppliers: (_) => const AuthGuard(child: SuppliersScreen()),
     addSupplier: (_) => const AuthGuard(child: AddSupplierScreen()),

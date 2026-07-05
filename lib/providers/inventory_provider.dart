@@ -44,31 +44,52 @@ class InventoryProvider extends ChangeNotifier {
   }
 
   Future<void> loadMedicines() async {
+    if (_isLoading) return;
+
     _isLoading = true;
     notifyListeners();
 
-    _medicines = await _inventoryService.fetchAll();
-
-    _isLoading = false;
-    notifyListeners();
+    try {
+      _medicines = await _inventoryService.fetchAll();
+    } catch (error) {
+      debugPrint('LOAD ERROR: $error');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> addMedicine(Medicine medicine) async {
-    await _inventoryService.add(medicine);
-    await loadMedicines();
+    try {
+      await _inventoryService.add(medicine);
+      await loadMedicines();
+    } catch (error) {
+      debugPrint('ADD ERROR: $error');
+      rethrow;
+    }
   }
 
   Future<void> updateMedicine(Medicine medicine) async {
-    await _inventoryService.update(medicine);
-    await loadMedicines();
+    try {
+      await _inventoryService.update(medicine);
+      await loadMedicines();
+    } catch (error) {
+      debugPrint('UPDATE ERROR: $error');
+      rethrow;
+    }
   }
 
-  Future<void> removeMedicine(String id) async {
-    await _inventoryService.delete(id);
-    await loadMedicines();
+  Future<void> removeMedicine(int? id) async {
+    try {
+      await _inventoryService.delete(id);
+      await loadMedicines();
+    } catch (error) {
+      debugPrint('DELETE ERROR: $error');
+      rethrow;
+    }
   }
 
-  Medicine? findById(String id) {
+  Medicine? findById(int? id) {
     try {
       return _medicines.firstWhere((m) => m.id == id);
     } catch (_) {
