@@ -96,4 +96,16 @@ class InventoryProvider extends ChangeNotifier {
       return null;
     }
   }
+
+  Medicine? findByBarcode(String? barcode) {
+    if (barcode == null || barcode.trim().isEmpty) return null;
+
+    final normalized = barcode.trim().toLowerCase();
+    return _medicines.cast<Medicine?>().firstWhere(
+          (medicine) =>
+              medicine != null &&
+              (medicine.barcode ?? '').trim().toLowerCase() == normalized,
+          orElse: () => null,
+        );
+  }
 }

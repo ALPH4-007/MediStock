@@ -5,6 +5,7 @@ import '../../app/constants.dart';
 import '../../app/theme.dart';
 import '../../models/medicine.dart';
 import '../../providers/inventory_provider.dart';
+import '../../screens/scan/scan_screen.dart';
 import '../../services/inventory_service.dart';
 
 class AddMedicineScreen extends StatefulWidget {
@@ -48,6 +49,17 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
 
     if (picked != null) {
       setState(() => _expiryDate = picked);
+    }
+  }
+
+  Future<void> _scanBarcode() async {
+    final result = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(builder: (_) => const ScanScreen(returnResult: true)),
+    );
+
+    if (result != null && mounted) {
+      _barcodeController.text = result;
     }
   }
 
@@ -117,9 +129,15 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
             const SizedBox(height: AppConstants.spaceMD),
             TextFormField(
               controller: _barcodeController,
-              decoration:
-                  const InputDecoration(labelText: 'Barcode (optional)'),
-              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Barcode (optional)',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.qr_code_scanner_outlined),
+                  onPressed: _scanBarcode,
+                  tooltip: 'Scan barcode',
+                ),
+              ),
+              keyboardType: TextInputType.text,
             ),
             const SizedBox(height: AppConstants.spaceMD),
             DropdownButtonFormField<String>(
