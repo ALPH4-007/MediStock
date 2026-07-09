@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../inventory/inventory_screen.dart';
 import '../scan/scan_screen.dart';
 import '../suppliers/suppliers_screen.dart';
+import '../orders/orders_screen.dart';
 import '../settings/settings_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     InventoryScreen(),
     ScanScreen(),
     SuppliersScreen(),
+    OrdersScreen(),
     SettingsScreen(),
   ];
 
@@ -25,7 +27,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[currentIndex],
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
@@ -33,9 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             currentIndex = index;
           });
         },
-
         type: BottomNavigationBarType.fixed,
-
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.inventory),
@@ -48,6 +47,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.local_shipping),
             label: "Suppliers",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
+            label: "Orders",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

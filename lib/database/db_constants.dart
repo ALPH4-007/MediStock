@@ -1,6 +1,6 @@
 class DBConstants {
   static const String dbName = 'medistock.db';
-  static const int dbVersion = 2;
+  static const int dbVersion = 5;
 
   static const String medicinesTable = 'medicines';
   static const String colId = 'id';
@@ -18,4 +18,28 @@ class DBConstants {
   static const String colLocation = 'location';
   static const String colDescription = 'description';
   static const String colCreatedAt = 'createdAt';
+  static const String colPhotoPath = 'photoPath';
+
+  static const String activityLogTable = 'activity_log';
+  static const String colActivityId = 'id';
+  static const String colActivityType = 'type';
+  static const String colActivityTitle = 'title';
+  static const String colActivitySubtitle = 'subtitle';
+  static const String colActivityTimestamp = 'timestamp';
+
+  static const String ordersTable = 'orders';
+  static const String colOrderId = 'id';
+  static const String colOrderSupplierId = 'supplierId';
+  static const String colOrderSupplierName = 'supplierName';
+  static const String colOrderStatus = 'status';
+  static const String colOrderDate = 'orderDate';
+  static const String colOrderNotes = 'notes';
+
+  static const String orderItemsTable = 'order_items';
+  static const String colOrderItemId = 'id';
+  static const String colOrderItemOrderId = 'orderId';
+  static const String colOrderItemMedicineId = 'medicineId';
+  static const String colOrderItemMedicineName = 'medicineName';
+  static const String colOrderItemQuantity = 'quantity';
+  static const String colOrderItemUnitPrice = 'unitPrice';
 }

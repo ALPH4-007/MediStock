@@ -14,6 +14,7 @@ class Medicine {
   final String location;
   final String? description;
   final DateTime? createdAt;
+  final String? photoPath;
 
   Medicine({
     this.id,
@@ -31,6 +32,7 @@ class Medicine {
     this.location = 'Main Shelf',
     this.description,
     this.createdAt,
+    this.photoPath,
     double? unitPrice,
   })  : purchasePrice = purchasePrice ?? sellingPrice ?? unitPrice ?? 0.0,
         sellingPrice = sellingPrice ?? unitPrice ?? purchasePrice ?? 0.0;
@@ -60,6 +62,7 @@ class Medicine {
       'location': location,
       'description': description,
       'createdAt': createdAt?.toIso8601String(),
+      'photoPath': photoPath,
     };
   }
 
@@ -80,6 +83,7 @@ class Medicine {
       location: map['location']?.toString() ?? 'Main Shelf',
       description: map['description']?.toString(),
       createdAt: _parseDateTime(map['createdAt']),
+      photoPath: map['photoPath']?.toString(),
     );
   }
 
@@ -99,6 +103,7 @@ class Medicine {
     String? location,
     String? description,
     DateTime? createdAt,
+    String? photoPath,
   }) {
     return Medicine(
       id: id ?? this.id,
@@ -116,6 +121,7 @@ class Medicine {
       location: location ?? this.location,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
+      photoPath: photoPath ?? this.photoPath,
     );
   }
 

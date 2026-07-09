@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app/theme.dart';
 import '../models/medicine.dart';
+import '../utils/currency_formatter.dart';
 import 'expiry_badge.dart';
 import 'stock_badge.dart';
 
@@ -35,7 +36,7 @@ class MedicineCard extends StatelessWidget {
                     child: Text(medicine.name,
                         style: Theme.of(context).textTheme.titleLarge),
                   ),
-                  Text('₵${medicine.unitPrice.toStringAsFixed(2)}',
+                  Text(formatCurrency(medicine.unitPrice),
                       style: Theme.of(context).textTheme.titleLarge),
                   if (onEdit != null)
                     IconButton(
@@ -55,8 +56,21 @@ class MedicineCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 4),
-              Text('${medicine.category} · Qty: ${medicine.quantity}',
-                  style: Theme.of(context).textTheme.bodyMedium),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                        '${medicine.category} · Qty: ${medicine.quantity}',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ),
+                  if (onTap != null)
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 14,
+                      color: Colors.grey.shade400,
+                    ),
+                ],
+              ),
               const SizedBox(height: 12),
               Wrap(spacing: 8, runSpacing: 8, children: [
                 StockBadge(medicine: medicine),
