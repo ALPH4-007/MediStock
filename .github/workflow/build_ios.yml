@@ -1,0 +1,46 @@
+name: Build Flutter iOS IPA
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: 
+
+jobs:
+  build:
+    name: Build iOS App
+    runs-on: macos-latest 
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build iOS Frameworks
+        run: flutter build ios --release --no-codesign
+
+      - name: Packaging Payload App
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r app-release.ipa Payload
+          mkdir -p build/output
+          mv app-release.ipa build/output/
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-app-bundle
+          path: build/output/app-release.ipa
