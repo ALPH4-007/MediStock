@@ -19,6 +19,9 @@ class DBHelper {
     return openDatabase(
       path,
       version: DBConstants.dbVersion,
+      onConfigure: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON');
+      },
       onCreate: (db, version) async {
         await DBInit.createTables(db);
       },
@@ -34,6 +37,12 @@ class DBHelper {
         }
         if (oldVersion < 5) {
           await _migrateToV5(db);
+        }
+        if (oldVersion < 6) {
+          await _migrateToV6(db);
+        }
+        if (oldVersion < 7) {
+          await _migrateToV7(db);
         }
       },
       onOpen: (db) async {
@@ -115,5 +124,35 @@ class DBHelper {
           ON DELETE CASCADE
       )
     ''');
+  }
+
+  static Future<void> _migrateToV6(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS ${DBConstants.suppliersTable} (
+        ${DBConstants.colId} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${DBConstants.colName} TEXT NOT NULL,
+        ${DBConstants.colSupplierContactPerson} TEXT NOT NULL,
+        ${DBConstants.colSupplierPhone} TEXT NOT NULL,
+        ${DBConstants.colSupplierEmail} TEXT,
+        ${DBConstants.colSupplierAddress} TEXT,
+        ${DBConstants.colSupplierNotes} TEXT,
+        ${DBConstants.colCreatedAt} TEXT
+      )
+    ''');
+  }
+
+  static Future<void> _migrateToV7(Database db) async {
+    final tableInfo =
+        await db.rawQuery('PRAGMA table_info(${DBConstants.medicinesTable})');
+    final existingColumns = tableInfo
+        .map((row) => row['name']?.toString())
+        .whereType<String>()
+        .toSet();
+
+    if (!existingColumns.contains(DBConstants.colSupplierId)) {
+      await db.execute(
+        'ALTER TABLE ${DBConstants.medicinesTable} ADD COLUMN ${DBConstants.colSupplierId} INTEGER DEFAULT 0',
+      );
+    }
   }
 }

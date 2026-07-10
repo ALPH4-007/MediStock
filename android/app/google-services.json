@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "33306441539",
+    "project_id": "medistock-pharmacy-v001",
+    "storage_bucket": "medistock-pharmacy-v001.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33306441539:android:64410157d3ff1a5ceb21f6",
+        "android_client_info": {
+          "package_name": "com.example.medistock"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJPv98vF19iydqn1lSL5xCOOZ4imXmbK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

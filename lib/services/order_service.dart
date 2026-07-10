@@ -62,9 +62,6 @@ class OrderService {
         whereArgs: [order.id],
       );
 
-      // Simplest correct approach: replace all items rather than trying
-      // to diff old vs new — orders are edited infrequently and item
-      // lists are small, so this avoids complex reconciliation logic.
       await txn.delete(
         DBConstants.orderItemsTable,
         where: '${DBConstants.colOrderItemOrderId} = ?',
@@ -88,8 +85,6 @@ class OrderService {
     final db = await DBHelper.database;
 
     await db.transaction((txn) async {
-      // Delete items first — no ON DELETE CASCADE relied upon, since
-      // sqflite doesn't enable foreign key enforcement by default.
       await txn.delete(
         DBConstants.orderItemsTable,
         where: '${DBConstants.colOrderItemOrderId} = ?',

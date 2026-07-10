@@ -6,8 +6,10 @@ import '../screens/add_suppliers/add_suppliers_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/inventory/inventory_screen.dart';
 import '../screens/login/login_screen.dart';
+import '../screens/login/register_screen.dart';
 import '../screens/notificatons/notifications_screen.dart';
 import '../screens/orders/orders_screen.dart';
+import '../profile/profile_screen.dart';
 import '../screens/reports/reports_screen.dart';
 import '../screens/scan/scan_screen.dart';
 import '../screens/settings/settings_screen.dart';
@@ -16,15 +18,12 @@ import '../screens/suppliers/suppliers_screen.dart';
 import '../widgets/auth_guard.dart';
 
 class AppRoutes {
-  AppRoutes._(); // Prevents creating instances
-
-  // ---------------------------------------------------------------------
-  // Route names
-  // ---------------------------------------------------------------------
+  AppRoutes._();
 
   // Authentication
   static const String splash = '/';
   static const String login = '/login';
+  static const String register = '/register';
 
   // Dashboard
   static const String dashboard = '/dashboard';
@@ -53,8 +52,10 @@ class AppRoutes {
   // Settings
   static const String settings = '/settings';
 
+  // Profile
+  static const String profile = '/profile';
+
   // Future / not built yet — uncomment when you add these screens
-  // static const String profile = '/profile';
   // static const String about = '/about';
   // static const String help = '/help';
 
@@ -74,6 +75,7 @@ class AppRoutes {
   static final Map<String, WidgetBuilder> routes = {
     splash: (_) => const SplashScreen(),
     login: (_) => const LoginScreen(),
+    register: (_) => const RegisterScreen(),
     dashboard: (_) => const AuthGuard(child: DashboardScreen()),
     inventory: (_) => const AuthGuard(child: InventoryScreen()),
     addMedicine: (_) => const AuthGuard(child: AddMedicineScreen()),
@@ -85,5 +87,7 @@ class AppRoutes {
     reports: (_) => const AuthGuard(child: ReportsScreen()),
     notifications: (_) => const AuthGuard(child: NotificationsScreen()),
     settings: (_) => const AuthGuard(child: SettingsScreen()),
+    profile: (_) => const AuthGuard(child: ProfileScreen()),
   };
 }
+

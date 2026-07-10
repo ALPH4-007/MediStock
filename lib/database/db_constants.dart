@@ -1,6 +1,6 @@
 class DBConstants {
   static const String dbName = 'medistock.db';
-  static const int dbVersion = 5;
+  static const int dbVersion = 7;
 
   static const String medicinesTable = 'medicines';
   static const String colId = 'id';
@@ -19,6 +19,13 @@ class DBConstants {
   static const String colDescription = 'description';
   static const String colCreatedAt = 'createdAt';
   static const String colPhotoPath = 'photoPath';
+
+  static const String suppliersTable = 'suppliers';
+  static const String colSupplierContactPerson = 'contactPerson';
+  static const String colSupplierPhone = 'phone';
+  static const String colSupplierEmail = 'email';
+  static const String colSupplierAddress = 'address';
+  static const String colSupplierNotes = 'notes';
 
   static const String activityLogTable = 'activity_log';
   static const String colActivityId = 'id';

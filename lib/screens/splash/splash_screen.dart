@@ -25,9 +25,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    // 2. Load saved auth state
+    // 2. Wait for Firebase Auth to initialize
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    await authProvider.loadLoginState();
+    
+    // If it's still loading, we wait for a bit
+    while (authProvider.isLoading) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
 
     if (!mounted) return;
 

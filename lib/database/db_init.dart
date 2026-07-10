@@ -26,6 +26,19 @@ class DBInit {
     ''');
 
     await db.execute('''
+      CREATE TABLE IF NOT EXISTS ${DBConstants.suppliersTable} (
+        ${DBConstants.colId} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${DBConstants.colName} TEXT NOT NULL,
+        ${DBConstants.colSupplierContactPerson} TEXT NOT NULL,
+        ${DBConstants.colSupplierPhone} TEXT NOT NULL,
+        ${DBConstants.colSupplierEmail} TEXT,
+        ${DBConstants.colSupplierAddress} TEXT,
+        ${DBConstants.colSupplierNotes} TEXT,
+        ${DBConstants.colCreatedAt} TEXT
+      )
+    ''');
+
+    await db.execute('''
       CREATE TABLE IF NOT EXISTS ${DBConstants.activityLogTable} (
         ${DBConstants.colActivityId} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${DBConstants.colActivityType} TEXT NOT NULL,

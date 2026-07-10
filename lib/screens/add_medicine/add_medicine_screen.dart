@@ -36,8 +36,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
   DateTime? _expiryDate;
   bool _isSaving = false;
 
-  // Path to the picked medicine photo, if any — saved with the medicine
-  // as Medicine.photoPath.
   XFile? _photoFile;
 
   @override
@@ -123,8 +121,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
 
       if (!mounted) return;
 
-      // Log this as an activity entry so it shows up on the Dashboard's
-      // Recent Activity feed.
       await context.read<ActivityLogProvider>().log(
             type: 'medicine_added',
             title: '${medicine.name} added',
@@ -156,8 +152,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
     return null;
   }
 
-  // Shared pill-shaped input decoration — local to this screen only, so
-  // other forms (Login, Edit Medicine) are untouched.
   InputDecoration _pillDecoration({
     required String hint,
     required IconData icon,
@@ -207,7 +201,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
         child: ListView(
           padding: const EdgeInsets.all(AppTheme.radius),
           children: [
-            // Medicine Photo upload card
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -377,7 +370,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
 
             _fieldLabel('Category'),
             DropdownButtonFormField<String>(
-              initialValue: _category,
+              value: _category,
               decoration: _pillDecoration(
                   hint: 'Select category', icon: Icons.layers_outlined),
               items: InventoryService.categories

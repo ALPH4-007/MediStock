@@ -6,6 +6,7 @@ import '../../app/routes.dart';
 import '../../app/theme.dart';
 import '../../providers/inventory_provider.dart';
 import '../../providers/order_provider.dart';
+import '../../providers/auth_provider.dart';
 import 'inventory_list_screen.dart';
 
 class InventoryScreen extends StatefulWidget {
@@ -62,6 +63,35 @@ class _InventoryScreenState extends State<InventoryScreen> {
           padding: EdgeInsets.zero,
           children: [
             _GreetingHeader(onSearchTap: () => _openList(context)),
+            if (!inventory.isLoading && !context.read<AuthProvider>().hasProfile)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppTheme.radius),
+                child: Container(
+                  margin: const EdgeInsets.only(top: 12),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppTheme.warning.withValues(alpha: 0.1),
+                    borderRadius: AppTheme.borderRadius,
+                    border: Border.all(color: AppTheme.warning.withValues(alpha: 0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.info_outline, color: AppTheme.warning),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Text(
+                          'Your profile is incomplete. Add your name to personalize your dashboard.',
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pushNamed(context, AppRoutes.profile),
+                        child: const Text('Setup'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.all(AppTheme.radius),
               child: Column(
@@ -164,9 +194,21 @@ class _GreetingHeader extends StatelessWidget {
 
   const _GreetingHeader({required this.onSearchTap});
 
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  }
+
   @override
   Widget build(BuildContext context) {
     final dateLabel = DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now());
+    final auth = context.watch<AuthProvider>();
+    
+    // Get the first name only for a friendlier greeting, fallback to 'Pharmacist'
+    final fullName = auth.name.trim();
+    final displayName = fullName.isNotEmpty ? fullName.split(' ')[0] : 'Pharmacist';
 
     return Container(
       width: double.infinity,
@@ -196,9 +238,9 @@ class _GreetingHeader extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      'Good Morning, Pharmacist 👋',
-                      style: TextStyle(
+                    Text(
+                      '${_getGreeting()}, $displayName 👋',
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -207,8 +249,6 @@ class _GreetingHeader extends StatelessWidget {
                   ],
                 ),
               ),
-              // Notification bell — no real notification system exists yet,
-              // so this is a static icon, not wired to anything.
               const CircleAvatar(
                 backgroundColor: Colors.white24,
                 child: Icon(Icons.notifications_outlined, color: Colors.white),
